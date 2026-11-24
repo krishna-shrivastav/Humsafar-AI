@@ -1,0 +1,35 @@
+{
+  "product": "NagrikSetu",
+  "artifact": "Website only",
+  "pages": [
+    "Overview",
+    "Heritage Atlas",
+    "Visual Lens",
+    "Ask NagrikSetu",
+    "Nearby Explorer",
+    "Audio Journeys",
+    "Trip Planner",
+    "Heritage Timeline",
+    "Compare Monuments",
+    "Heritage Quiz",
+    "Saved Places",
+    "Visitor Essentials",
+    "Offline Packs",
+    "My Profile",
+    "Tourism Insights"
+  ],
+  "catalogue_records": 54,
+  "regional_focus": {
+    "Gorakhpur": 6,
+    "Lucknow": 8
+  },
+  "backend_base_url_config": "config.js",
+  "firebase_web_auth_config": "firebase-config.js",
+  "verification": {
+    "javascript_syntax": "passed",
+    "catalogue_json": "passed",
+    "manifest_json": "passed",
+    "static_http_smoke_test": "passed",
+    "browser_e2e": "not run (headless browser runtime unavailable)"
+  }
+}

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102d29"><meta name="description" content="NagrikSetu — India's multilingual heritage discovery and tourism companion.">
+<title>NagrikSetu — India's Heritage Companion</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+ <a class="brand" href="#home" data-nav="home"><span class="brand-symbol">न</span><span><b>NagrikSetu</b><small>HERITAGE, CONNECTED</small></span></a>
+ <div class="side-label">DISCOVER</div>
+ <button class="nav-item active" data-page="home"><span>⌂</span>Overview</button>
+ <button class="nav-item" data-page="explore"><span>⌕</span>Heritage Atlas <i id="atlasCount">54</i></button>
+ <button class="nav-item" data-page="identify"><span>◉</span>Visual Lens</button>
+ <button class="nav-item" data-page="guide"><span>✳</span>Ask NagrikSetu</button>
+ <button class="nav-item" data-page="nearby"><span>⌖</span>Nearby Explorer</button>
+ <button class="nav-item" data-page="tours"><span>▷</span>Audio Journeys</button>
+ <button class="nav-item" data-page="planner"><span>⌁</span>Trip Planner</button>
+ <div class="side-label">LEARN & PLAY</div>
+ <button class="nav-item" data-page="timeline"><span>◷</span>Heritage Timeline</button>
+ <button class="nav-item" data-page="compare"><span>⇄</span>Compare Monuments</button>
+ <button class="nav-item" data-page="quiz"><span>✧</span>Heritage Quiz</button>
+ <div class="side-label">YOUR SPACE</div>
+ <button class="nav-item" data-page="saved"><span>♡</span>Saved Places <i id="savedCount">0</i></button>
+ <button class="nav-item" data-page="support"><span>✚</span>Visitor Essentials</button>
+ <button class="nav-item" data-page="offline"><span>⇩</span>Offline Packs</button>
+ <button class="nav-item" data-page="profile"><span>◌</span>My Profile</button>
+ <div class="side-spacer"></div>
+ <button class="nav-item admin-link" data-page="admin"><span>▦</span>Tourism Insights <small>DEMO</small></button>
+ <div class="side-footer"><span class="online-dot"></span><span id="connectionLabel">Ready to explore</span><p>Built for India's living heritage.</p></div>
+</aside>
+<main class="main">
+<header class="topbar">
+ <button class="mobile-menu" id="menuToggle" aria-label="Open navigation">☰</button>
+ <div class="breadcrumbs" id="breadcrumbs">DISCOVER / OVERVIEW</div>
+ <div class="top-tools"><span class="network-state" id="networkState">● Online</span><button class="tool-btn" id="accessToggle" title="Larger text">Aa</button><button class="tool-btn" id="readPage" title="Read this page aloud">🔊</button><button class="tool-btn" id="themeToggle" title="Toggle dark mode">☾</button><select id="languageSelect" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option></select><button class="profile-chip" data-page="profile"><span id="avatarInitial">G</span><b id="headerUser">Guest</b></button></div>
+</header>
+<div class="content">
+<!-- HOME -->
+<section class="page active" id="page-home">
+ <div class="hero">
+  <div class="hero-copy"><div class="eyebrow gold">YOUR PERSONAL HERITAGE COMPANION</div><h1>India has stories.<br><em>Come closer.</em></h1><p>Discover the places, people and traditions behind India's heritage. Ask questions, explore nearby, listen to stories and plan a journey — in your language.</p>
+   <div class="hero-actions"><button class="btn btn-gold" data-page="explore">Explore Heritage <span>↗</span></button><button class="btn btn-outline-light" data-page="guide">Ask your guide <span>→</span></button></div>
+   <div class="hero-proof"><span>◉ Hindi + English</span><span>⌖ Destination-first</span><span>⇩ Offline-ready</span></div>
+  </div>
+  <div class="hero-seal"><div class="seal-circle">भारत<br><b>IN</b></div><small>ONE COUNTRY<br>COUNTLESS STORIES</small></div>
+ </div>
+ <div class="section-head"><div><div class="eyebrow">START YOUR JOURNEY</div><h2>Explore Uttar Pradesh</h2><p>Begin close to home, then follow the stories across India.</p></div><button class="link-btn" data-page="explore">Open Heritage Atlas ↗</button></div>
+ <div class="region-grid">
+  <button class="region-card gorakhpur" data-city="Gorakhpur"><span class="region-kicker">YOUR REGIONAL SPOTLIGHT</span><strong>Gorakhpur</strong><small>Temples · Culture · Lakes · Living heritage</small><b>Explore city →</b></button>
+  <button class="region-card lucknow" data-city="Lucknow"><span class="region-kicker">THE CITY OF AWADH</span><strong>Lucknow</strong><small>Imambaras · Architecture · History · Museums</small><b>Explore city →</b></button>
+  <button class="region-card up" data-city="Ayodhya"><span class="region-kicker">SACRED LANDSCAPES</span><strong>Ayodhya & Beyond</strong><small>Ayodhya · Varanasi · Sarnath · Agra</small><b>Discover Uttar Pradesh →</b></button>
+ </div>
+ <div class="section-head compact"><div><div class="eyebrow">CURATED DISCOVERIES</div><h2>Landmarks worth knowing</h2></div><button class="link-btn" data-page="explore">View all places ↗</button></div>
+ <div class="place-grid" id="homeFeatured"></div>
+ <div class="home-feature-row">
+  <article class="feature-tile tile-dark"><div class="eyebrow gold">VISUAL LENS</div><h2>See a monument.<br>Understand its story.</h2><p>Upload a photograph or use a video link to start identifying a heritage site.</p><button class="btn btn-light" data-page="identify">Identify a place →</button><span class="tile-watermark">◉</span></article>
+  <article class="feature-tile tile-sand"><div class="eyebrow">A GUIDE THAT LISTENS</div><h2>Ask beyond<br>the signboard.</h2><p>Ask by text or voice. Explore recorded history and local folklore as separate stories.</p><button class="btn btn-dark" data-page="guide">Talk to NagrikSetu →</button><span class="tile-watermark">✳</span></article>
+ </div>
+ <div class="section-head compact"><div><div class="eyebrow">YOUR VISIT, YOUR WAY</div><h2>More ways to experience heritage</h2></div></div>
+ <div class="quick-grid">
+  <button class="quick-card" data-page="tours"><span>♫</span><b>Audio journeys</b><small>Listen as you walk</small></button>
+  <button class="quick-card" data-page="planner"><span>⌁</span><b>Plan a trip</b><small>Build a thoughtful route</small></button>
+  <button class="quick-card" data-page="support"><span>✚</span><b>Visitor essentials</b><small>Find help and facilities</small></button>
+  <button class="quick-card" data-page="offline"><span>⇩</span><b>Offline packs</b><small>Take key content with you</small></button>
+ </div>
+ <footer>© 2026 NagrikSetu · India's Heritage Companion <span>Content verification is an ongoing process.</span></footer>
+</section>
+
+<!-- EXPLORE -->
+<section class="page" id="page-explore">
+ <div class="page-intro"><div class="eyebrow">THE LIVING ATLAS OF INDIA</div><h1>Heritage Atlas<span>.</span></h1><p>Explore monuments, sacred places, museums, forts and cultural landmarks. Start with Gorakhpur or Lucknow, or discover places across India.</p></div>
+ <div class="atlas-controls"><label class="search-field"><span>⌕</span><input id="atlasSearch" placeholder="Search India Gate, Gorakhnath Temple, city…"></label><select id="cityFilter"><option value="all">All cities</option></select><select id="stateFilter"><option value="all">All states</option></select><select id="categoryFilter"><option value="all">All categories</option></select><button class="filter-reset" id="resetFilters">Reset</button></div>
+ <div class="filter-chips" id="regionChips"><button class="chip active" data-region="all">All India</button><button class="chip" data-region="Gorakhpur">Gorakhpur</button><button class="chip" data-region="Lucknow">Lucknow</button><button class="chip" data-region="Uttar Pradesh">Uttar Pradesh</button><button class="chip" data-region="National landmarks">National landmarks</button></div>
+ <div class="result-line"><b id="atlasResultCount">54 places</b><span>Starter catalogue · check official visitor information</span></div>
+ <div class="place-grid" id="atlasGrid"></div>
+</section>
+
+<!-- IDENTIFY -->
+<section class="page" id="page-identify">
+ <div class="page-intro"><div class="eyebrow">CAMERA · IMAGE · VIDEO</div><h1>Visual Lens<span>.</span></h1><p>Identify a monument from a photograph or explore a heritage location from a video. Recognition requires a configured backend.</p></div>
+ <div class="mode-tabs"><button class="mode-tab active" data-ident-mode="image">▧ Image recognition</button><button class="mode-tab" data-ident-mode="video">▷ Video analysis</button></div>
+ <div class="identify-layout">
+  <div class="panel identify-panel">
+   <div id="imageMode">
+    <label class="dropzone" id="imageDrop"><input type="file" id="imageFile" accept="image/*" capture="environment" hidden><span class="drop-icon">＋</span><b>Upload or capture a monument photo</b><small>JPG, PNG or WEBP · Camera supported on mobile browsers</small><span class="btn btn-dark">Choose image</span><img id="imagePreview" alt="Selected image preview" hidden></label>
+    <label class="field-label">Context hint (optional)<input id="imageHint" placeholder="Example: I think this is in Lucknow…"></label>
+    <div class="inline-checks"><label><input type="checkbox" id="includeInfo" checked> Include historical information</label><label><input type="checkbox" id="includeSimilar" checked> Show similar places</label></div>
+    <button class="btn btn-dark full-btn" id="analyzeImage">Analyze photograph ↗</button>
+   </div>
+   <div id="videoMode" hidden>
+    <div class="field-label">Video source</div><div class="mode-tabs small-tabs"><button class="mode-tab active" data-video-mode="youtube">YouTube link</button><button class="mode-tab" data-video-mode="upload">Upload video</button></div>
+    <div id="youtubeInput"><label class="field-label">YouTube URL<input id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=…"></label><label class="field-label">Video title (optional)<input id="videoTitle" placeholder="Heritage walk in Varanasi"></label></div>
+    <div id="uploadVideo" hidden><label class="dropzone compact-drop"><input type="file" id="videoFile" accept="video/*" hidden><span class="drop-icon">＋</span><b>Select a video file</b><small>Video upload needs backend support</small><span class="btn btn-dark">Choose video</span><span id="videoFileName"></span></label></div>
+    <button class="btn btn-dark full-btn" id="analyzeVideo">Analyze video ↗</button>
+   </div>
+  </div>
+  <aside class="panel side-note"><div class="eyebrow">HOW VISUAL LENS WORKS</div><h3>From image to insight.</h3><ol class="steps"><li><b>Capture</b><span>Take or upload a clear photograph.</span></li><li><b>Recognise</b><span>The configured vision service returns likely matches.</span></li><li><b>Understand</b><span>Explore source-backed history and architecture.</span></li></ol><div class="notice"><b>Recognition status</b><p id="backendStatus">Demo mode. Add your stable API URL in config.js to enable real recognition.</p><button class="btn btn-outline-dark full-btn" id="testBackend" type="button">Test backend connection</button></div></aside>
+ </div>
+ <div id="identifyResult" class="result-panel" hidden></div>
+</section>
+
+<!-- GUIDE -->
+<section class="page" id="page-guide">
+ <div class="page-intro"><div class="eyebrow">YOUR PERSONAL HERITAGE GUIDE</div><h1>Ask NagrikSetu<span>.</span></h1><p>Ask about a monument, architecture, inscriptions, local traditions or what to explore next.</p></div>
+ <div class="guide-layout">
+  <div class="panel chat-panel">
+   <div class="chat-head"><div class="guide-avatar">न</div><div><b>NagrikSetu Guide</b><small><span class="online-dot"></span> Hindi · English · Voice enabled</small></div><button class="icon-btn" id="clearChat" title="Clear conversation">↻</button></div>
+   <div class="chat-context"><label>Place context<select id="chatContext"><option value="">General India heritage</option></select></label><label>Experience mode<select id="visitorMode"><option value="quick">Quick explanation</option><option value="child">Story for children</option><option value="deep">Detailed history & architecture</option><option value="devotional">Devotional context</option></select></label></div>
+   <div class="chat-messages" id="chatMessages"><div class="chat-msg assistant"><small>NAGRIKSETU GUIDE</small><p>Namaste! I can help you discover India's heritage. Ask me about a place, or try one of these questions.</p></div></div>
+   <div class="suggested-prompts"><button data-prompt="Why is Gorakhnath Temple important?">Tell me about Gorakhnath Temple</button><button data-prompt="What is the history of Bara Imambara?">Bara Imambara history</button><button data-prompt="What is documented history and what is folklore at this place?">History vs folklore</button></div>
+   <form class="chat-compose" id="chatForm"><button type="button" id="voiceInput" title="Speak your question">♩</button><input id="chatInput" placeholder="Ask about India's heritage…" autocomplete="off"><button class="send-btn" type="submit">↑</button></form>
+   <div class="small-disclaimer">Starter answers are curated demo content. Live conversational answers need your backend and verified source collection.</div>
+  </div>
+  <aside class="guide-aside">
+   <div class="eyebrow">TRUST & CONTEXT</div><h3>Know what is known.<br>Respect what is told.</h3>
+   <div class="story-key"><span class="history-dot"></span><div><b>Recorded history</b><small>Supported by credible records, inscriptions or published research.</small></div></div>
+   <div class="story-key"><span class="folklore-dot"></span><div><b>Folklore & tradition</b><small>Local beliefs and oral stories, clearly labelled as such.</small></div></div>
+   <div class="notice"><b>Ask by voice</b><p>Use the microphone button. Speech recognition availability depends on your browser and language settings.</p></div>
+   <button class="btn btn-outline-dark full-btn" data-page="identify">Use Visual Lens →</button>
+  </aside>
+ </div>
+</section>
+
+<!-- NEARBY -->
+<section class="page" id="page-nearby">
+ <div class="page-intro"><div class="eyebrow">EXPLORE WHAT'S AROUND YOU</div><h1>Nearby Explorer<span>.</span></h1><p>Find heritage sites and visitor facilities around your current location or a chosen city.</p></div>
+ <div class="nearby-toolbar panel"><label class="field-label">Search from<select id="nearbyBase"><option value="Gorakhpur">Gorakhpur</option><option value="Lucknow">Lucknow</option><option value="Ayodhya">Ayodhya</option><option value="Varanasi">Varanasi</option><option value="Agra">Agra</option><option value="Sarnath">Sarnath</option><option value="current">Use my current location</option></select></label><label class="field-label">Radius<select id="nearbyRadius"><option value="10">10 km</option><option value="25" selected>25 km</option><option value="50">50 km</option><option value="100">100 km</option><option value="200">200 km</option></select></label><button class="btn btn-dark" id="findNearby">Find nearby places ↗</button></div>
+ <div class="map-layout"><div id="heritageMap" class="map-box"></div><aside class="panel map-results"><div class="result-line"><b id="nearbyCount">Places around you</b><span>Approximate catalogue pins</span></div><div id="nearbyList" class="nearby-list"><p class="muted">Choose a city or share your location to discover nearby heritage places.</p></div></aside></div>
+ <div class="section-head compact"><div><div class="eyebrow">PRACTICAL HELP</div><h2>Find facilities nearby</h2></div><button class="link-btn" data-page="support">All visitor support ↗</button></div>
+ <div class="facility-shortcuts" id="facilityShortcuts"></div>
+</section>
+
+<!-- TOURS -->
+<section class="page" id="page-tours">
+ <div class="page-intro"><div class="eyebrow">LISTEN · WALK · DISCOVER</div><h1>Audio Journeys<span>.</span></h1><p>Choose a destination, your available time and a storytelling style. Listen stop by stop as you explore.</p></div>
+ <div class="tour-hero"><div><div class="eyebrow gold">SELF-GUIDED HERITAGE WALK</div><h2>Let the place<br>tell its story.</h2><p>Short narration, clear stops and a route shaped around your time.</p><button class="btn btn-gold" id="startFeaturedTour">Start featured journey ▶</button></div><div class="tour-art">♫</div></div>
+ <div class="tour-config panel"><label class="field-label">Destination<select id="tourCity"></select></label><label class="field-label">Time available<select id="tourDuration"><option value="60">1 hour</option><option value="180" selected>Half day · 3 hours</option><option value="360">Full day · 6 hours</option></select></label><label class="field-label">Narration style<select id="tourStyle"><option value="narrative">Narrative</option><option value="documentary">Documentary</option><option value="poetic">Poetic</option></select></label><label class="field-label">Language<select id="tourLanguage"><option value="en-IN">English</option><option value="hi-IN">Hindi</option></select></label><button class="btn btn-dark" id="buildTour">Build audio journey ↗</button><button class="btn btn-outline-dark" id="enableTourLocation" type="button">Enable nearby stop alerts ⌖</button></div>
+ <div id="tourLocationStatus" class="notice" hidden></div><div id="tourStops" class="tour-stops"></div>
+ <div class="notice"><b>Location-aware playback</b><p>Manual stop playback is available in this website. GPS-triggered narration requires geofenced route data and location permission. Browser speech synthesis is used for the demo narration.</p></div>
+</section>
+
+<!-- PLANNER -->
+<section class="page" id="page-planner">
+ <div class="page-intro"><div class="eyebrow">PLAN A MORE MEANINGFUL VISIT</div><h1>Trip Planner<span>.</span></h1><p>Build a destination itinerary around your time, interests, budget and travelling group.</p></div>
+ <div class="planner-layout"><form class="panel planner-form" id="plannerForm">
+  <label class="field-label">Starting destination<select id="planCity"></select></label>
+  <label class="field-label">Time available<select id="planDays"><option value="1">1 day</option><option value="2">2 days</option><option value="3" selected>3 days</option><option value="4">4 days</option><option value="5">5 days</option></select></label>
+  <label class="field-label">Your interests<select id="planInterest"><option value="heritage">History & architecture</option><option value="spiritual">Spiritual & pilgrimage</option><option value="family">Family-friendly</option><option value="crafts">Local crafts, food & ODOP</option><option value="buddhist">Buddhist heritage</option></select></label>
+  <label class="field-label">Travelling with<select id="planGroup"><option>Solo</option><option>Family with children</option><option>Friends</option><option>Senior travellers</option><option>Accessibility needs</option></select></label>
+  <label class="field-label">Approx. budget per person<select id="planBudget"><option value="budget">Budget-friendly</option><option value="moderate" selected>Moderate</option><option value="premium">Flexible / premium</option></select></label>
+  <label class="field-label">Preferred pace<select id="planPace"><option value="relaxed">Relaxed</option><option value="balanced" selected>Balanced</option><option value="packed">See more places</option></select></label>
+  <button class="btn btn-dark full-btn" type="submit">Create my itinerary ↗</button>
+  <p class="small-disclaimer">Demo route suggestions are illustrative. Confirm transport, official timings, ticket prices and access before travelling.</p>
+ </form><div class="panel itinerary-panel" id="itineraryResult"><div class="empty-state"><span>⌁</span><h3>Your journey starts here.</h3><p>Choose your preferences and create a sample itinerary.</p></div></div></div>
+ <div class="section-head compact"><div><div class="eyebrow">LOCAL EXPERIENCES</div><h2>Take a piece of the place home</h2><p>Explore local crafts, food traditions and district products. Check authenticity and current availability locally.</p></div></div><div class="local-experience-grid" id="localExperienceGrid"></div>
+</section>
+
+<!-- TIMELINE -->
+<section class="page" id="page-timeline">
+ <div class="page-intro"><div class="eyebrow">HISTORY THROUGH TIME</div><h1>Heritage Timeline<span>.</span></h1><p>Explore key historical periods, dynasties and turning points connected with a monument.</p></div>
+ <div class="tool-form panel"><label class="field-label">Choose a monument<select id="timelinePlace"></select></label><button class="btn btn-dark" id="generateTimeline">Generate timeline ↗</button></div>
+ <div class="panel timeline-panel" id="timelineResult"><div class="empty-state"><span>◷</span><h3>Choose a place to begin.</h3><p>Timeline content can be enriched from your verified heritage backend.</p></div></div>
+</section>
+
+<!-- COMPARE -->
+<section class="page" id="page-compare">
+ <div class="page-intro"><div class="eyebrow">TWO PLACES · MANY PERSPECTIVES</div><h1>Compare Monuments<span>.</span></h1><p>Explore differences in period, architecture, patronage, purpose and cultural context.</p></div>
+ <div class="compare-form panel"><label class="field-label">First monument<select id="compareA"></select></label><div class="versus">VS</div><label class="field-label">Second monument<select id="compareB"></select></label><button class="btn btn-dark" id="compareBtn">Compare places ↗</button></div>
+ <div id="compareResult" class="compare-result"></div>
+</section>
+
+<!-- QUIZ -->
+<section class="page" id="page-quiz">
+ <div class="page-intro"><div class="eyebrow">LEARN THROUGH PLAY</div><h1>Heritage Quiz<span>.</span></h1><p>Test your knowledge of India's monuments, people, architecture and cultural history.</p></div>
+ <div class="quiz-layout"><div class="panel quiz-setup" id="quizSetup"><div class="quiz-symbol">✧</div><h2>How well do you know India's heritage?</h2><label class="field-label">Choose a monument or topic<input id="quizTopic" list="quizTopics" placeholder="Taj Mahal, Qutub Minar, Awadh…"><datalist id="quizTopics"></datalist></label><label class="field-label">Difficulty<select id="quizDifficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></label><button class="btn btn-dark full-btn" id="startQuiz">Start 5-question quiz ↗</button><div class="quiz-benefits"><span>5 Questions</span><span>Instant feedback</span><span>Explanations</span></div></div><div class="panel quiz-play" id="quizPlay" hidden></div></div>
+</section>
+
+<!-- SAVED -->
+<section class="page" id="page-saved"><div class="page-intro"><div class="eyebrow">YOUR PERSONAL COLLECTION</div><h1>Saved Places<span>.</span></h1><p>Keep the places you want to revisit or include in a future trip.</p></div><div class="place-grid" id="savedGrid"></div></section>
+
+<!-- SUPPORT -->
+<section class="page" id="page-support">
+ <div class="page-intro"><div class="eyebrow">HELPFUL INFORMATION, CLOSE AT HAND</div><h1>Visitor Essentials<span>.</span></h1><p>Find practical visitor facilities. Use official local information where available; map search results may be incomplete.</p></div>
+ <div class="emergency-banner"><span>✚</span><div><b>Emergency response in India</b><p>Dial <strong>112</strong> for emergency assistance. Use local emergency services for urgent medical or safety needs.</p></div><a href="tel:112">Call 112 ↗</a></div>
+ <div class="support-filters panel"><label class="field-label">Search near<select id="supportCity"></select></label><label class="field-label">Facility type<select id="facilityType"><option value="hospital">Hospitals & medical help</option><option value="police">Police stations</option><option value="toilet">Public toilets</option><option value="parking">Parking</option><option value="water">Drinking water</option><option value="tourist">Tourist help desks</option><option value="food">Food outlets</option><option value="craft">Local crafts & ODOP</option></select></label><button class="btn btn-dark" id="facilitySearch">Find on map ↗</button></div>
+ <div class="support-grid" id="supportGrid"></div>
+ <div class="notice"><b>Safety and accuracy</b><p>Facility links open a map-provider search. They are not verified live listings. Confirm the location, operating hours and accessibility before relying on a facility.</p></div>
+</section>
+
+<!-- OFFLINE -->
+<section class="page" id="page-offline"><div class="page-intro"><div class="eyebrow">KEEP THE IMPORTANT DETAILS WITH YOU</div><h1>Offline Packs<span>.</span></h1><p>Download destination information for weak-network visits. This starter website caches its shell and lets you save destination data as a local pack.</p></div><div class="offline-layout"><div class="panel offline-intro"><div class="offline-icon">⇩</div><h2>Travel beyond the signal.</h2><p>Save destination names, summaries, coordinates, nearby suggestions and editorial notes to your device.</p><div class="notice"><b>What works offline?</b><p>Downloaded JSON packs and the cached website shell. Live AI, maps, GPS lookups and external imagery need a network connection.</p></div></div><div class="panel pack-list" id="offlinePackList"></div></div></section>
+
+<!-- PROFILE -->
+<section class="page" id="page-profile"><div class="page-intro"><div class="eyebrow">YOUR NAGRIKSETU SPACE</div><h1>My Profile<span>.</span></h1><p>Manage your visitor preferences and saved journey settings on this device.</p></div><div class="panel auth-panel" style="padding:18px;margin-bottom:14px"><div class="eyebrow">ACCOUNT ACCESS</div><h2 style="font:600 22px 'Playfair Display';margin:8px 0">Sign in to NagrikSetu</h2><p class="small-disclaimer" style="padding:0">Firebase Web Authentication can be enabled by adding your web app configuration in firebase-config.js. Until then, profile preferences remain local to this browser.</p><div class="auth-fields"><input id="authEmail" type="email" placeholder="Email address" autocomplete="email"><input id="authPassword" type="password" placeholder="Password" autocomplete="current-password"><button class="btn btn-dark" id="authSignIn" type="button">Sign in</button><button class="btn btn-outline-dark" id="authSignUp" type="button">Create account</button><button class="btn btn-outline-dark" id="authSignOut" type="button" hidden>Sign out</button></div><p id="authStatus" class="small-disclaimer" style="padding:8px 0 0">Authentication is not configured.</p></div><div class="profile-layout"><form class="panel profile-form" id="profileForm"><div class="profile-big" id="profileInitial">G</div><label class="field-label">Your name<input id="profileName" placeholder="Enter your name"></label><label class="field-label">Email (optional)<input id="profileEmail" type="email" placeholder="you@example.com"></label><label class="field-label">Preferred language<select id="profileLanguage"><option value="en">English</option><option value="hi">हिन्दी</option></select></label><label class="field-label">Visitor preference<select id="profilePreference"><option value="quick">Quick highlights</option><option value="deep">Detailed history</option><option value="family">Family & children</option><option value="devotional">Devotional context</option></select></label><button class="btn btn-dark full-btn">Save preferences</button><button class="btn btn-outline-dark full-btn" type="button" id="clearLocalData">Clear local website data</button><p class="small-disclaimer">This prototype stores profile preferences on this device only. It does not create a secure account or authenticate visitors.</p></form><div class="panel profile-stats"><div class="eyebrow">YOUR EXPLORATION</div><div class="stat-row"><b id="statSaved">0</b><span>Saved places</span></div><div class="stat-row"><b id="statViewed">0</b><span>Places opened</span></div><div class="stat-row"><b id="statQuestions">0</b><span>Questions asked</span></div><div class="notice"><b>Privacy first</b><p>Personal activity is stored locally for this demo. Tourism insights are shown as anonymised aggregate sample events in the demo dashboard.</p></div></div></div></section>
+
+<!-- ADMIN -->
+<section class="page" id="page-admin"><div class="page-intro"><div class="eyebrow">PUBLIC-SECTOR INSIGHT CONSOLE · DEMO</div><h1>Tourism Insights<span>.</span></h1><p>Illustrative, privacy-conscious dashboard layout for aggregated visitor needs. The numbers below are synthetic demo data, not real visitor analytics.</p></div><div class="admin-kpis"><div class="kpi panel"><small>DEMO VISIT SESSIONS</small><b>12,480</b><span>Illustrative sample</span></div><div class="kpi panel"><small>TOP LANGUAGE</small><b>Hindi</b><span>58% synthetic sample</span></div><div class="kpi panel"><small>TOP INTEREST</small><b>Heritage</b><span>Illustrative category</span></div><div class="kpi panel"><small>FACILITY SEARCHES</small><b>2,140</b><span>Illustrative sample</span></div></div><div class="admin-grid"><div class="panel admin-chart"><div class="eyebrow">VISITOR QUESTIONS · SAMPLE</div><h3>What visitors ask about</h3><div class="bar-row"><span>History & origins</span><i><b style="width:88%"></b></i><strong>88%</strong></div><div class="bar-row"><span>Architecture</span><i><b style="width:72%"></b></i><strong>72%</strong></div><div class="bar-row"><span>Nearby places</span><i><b style="width:61%"></b></i><strong>61%</strong></div><div class="bar-row"><span>Facilities</span><i><b style="width:46%"></b></i><strong>46%</strong></div><div class="bar-row"><span>Local stories</span><i><b style="width:39%"></b></i><strong>39%</strong></div></div><div class="panel admin-chart"><div class="eyebrow">LANGUAGE MIX · SAMPLE</div><h3>Visitor language preference</h3><div class="language-bars"><div><b>Hindi</b><span style="height:58%"></span><small>58%</small></div><div><b>English</b><span style="height:32%"></span><small>32%</small></div><div><b>Other</b><span style="height:10%"></span><small>10%</small></div></div></div></div><div class="notice"><b>Production dashboard requirements</b><p>Connect a consent-aware analytics pipeline, aggregate and de-identify events, apply role-based access and retention limits, and never expose identifiable visitor trails to the department dashboard.</p></div></section>
+</div><!-- content -->
+</main>
+</div>
+<div class="mobile-bottom"><button data-page="home">⌂<small>Home</small></button><button data-page="explore">⌕<small>Atlas</small></button><button data-page="guide">✳<small>Guide</small></button><button data-page="nearby">⌖<small>Nearby</small></button><button data-page="profile">◌<small>Profile</small></button></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="modal-backdrop" id="modalBackdrop" hidden><div class="modal panel" id="modalContent"></div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="config.js"></script><script src="firebase-config.js"></script><script src="app.js"></script>
+</body></html>

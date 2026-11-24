@@ -1,0 +1,9 @@
+{
+  "name": "NagrikSetu Heritage Companion",
+  "short_name": "NagrikSetu",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f5ef",
+  "theme_color": "#102d29",
+  "icons": []
+}
